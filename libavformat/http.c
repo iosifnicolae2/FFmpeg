@@ -1346,8 +1346,10 @@ static int http_connect(URLContext *h, const char *path, const char *local_path,
     bprint_escaped_path(&request, path);
     av_bprintf(&request, " HTTP/1.1\r\n");
 
-    if (post && s->chunked_post)
+   
+    if (post && s->chunked_post && 0 != strcmp(method, "DELETE"))
         av_bprintf(&request, "Transfer-Encoding: chunked\r\n");
+
     /* set default headers if needed */
     if (!has_header(s->headers, "\r\nUser-Agent: "))
         av_bprintf(&request, "User-Agent: %s\r\n", s->user_agent);
